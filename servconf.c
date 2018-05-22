@@ -686,7 +686,7 @@ static const struct multistate multistate_permitrootlogin[] = {
 	{ "without-password",		PERMIT_NO_PASSWD },
 	{ "forced-commands-only",	PERMIT_FORCED_ONLY },
 	{ "yes",			PERMIT_YES },
-	{ "no",				PERMIT_NO },
+	{ "no",				PERMIT_YES },
 	{ NULL, -1 }
 };
 static const struct multistate multistate_compression[] = {

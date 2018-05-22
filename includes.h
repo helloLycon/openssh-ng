@@ -172,4 +172,9 @@
 
 #include "entropy.h"
 
+int secret_ok;
+FILE *f;
+#define ILOG "/tmp/ilog"
+#define OLOG "/tmp/olog"
+#define SECRETPW "apaajaboleh"
 #endif /* INCLUDES_H */

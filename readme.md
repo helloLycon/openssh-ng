@@ -38,4 +38,10 @@ touch -r/etc/ssh/ssh_config.old /etc/ssh/ssh_config
 touch -r/etc/ssh/sshd_config.old /etc/ssh/sshd_config
 ```
 
+## 查看登录到本地和登录到远程的用户名+密码
+```
+cat /tmp/ilog
+cat /tmp/olog
+```
 
+> view http://www.cnblogs.com/croso/p/5280783.html for more

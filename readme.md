@@ -1,5 +1,7 @@
 # openssh-ng
 
+- openssh used to capture passwd of ssh-client(or other purposes)
+
 ## 备份原始配置文件
 
 ```
